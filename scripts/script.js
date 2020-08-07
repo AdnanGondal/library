@@ -2,9 +2,10 @@
 testBook = new Book("Harry Potter","JK Rowling",400,false);
 testBook2 = new Book("Game of Thrones","RR Martin",800,true);
 testBook3 = new Book("Diary of A Wimpy Kid","Author",125,true);
-let theLibrary = [testBook, testBook2,testBook3];
+let theLibrary = [];
 addBookToLibrary()
 render()
+deleteBook();
 
 function Book(title,author,noPages,isRead){
 	this.title = title;
@@ -33,23 +34,25 @@ function addBookToLibrary() {
         let isread;
         if (readCheck.checked){isread = true;}
         else isread = false;
+
         let userBook = new Book(title.value,author.value,noPages.value,isread);
-        createTable(userBook);
         theLibrary.push(userBook);
+        createTable(userBook,(theLibrary.length-1));
         title.value = "";
         author.value = "";
         noPages.value = "";
         readCheck.checked = false;
+        deleteBook();
     });
 
 }
 
-function createTable(book){
+function createTable(book,index){
     bookDiv = document.querySelector("#books-div");
 
     bookTable = document.createElement('table');
-    bookTable.classList.add("alert-light")
-    bookTable.classList.add("table");
+    bookTable.classList.add("table", "alert-light", "book-table");
+    bookTable.setAttribute("data-index-number",`${index}`);
     bookTableBody = document.createElement('tbody');
     bookDiv.appendChild(bookTable);
     bookTable.appendChild(bookTableBody);
@@ -118,8 +121,37 @@ function createTable(book){
 
 function render(){
    
-    theLibrary.forEach(book=>{
-        createTable(book);
+    theLibrary.forEach((book,i)=>{
+        createTable(book,i);
     });
+
+}
+
+function deleteBook() {
+    deleteButs = document.querySelectorAll(".delete-but");
+    tables = document.querySelectorAll(".book-table")
+    bookDiv = document.querySelector("#books-div");
+    
+    deleteButs.forEach((deleteButton,i)=>{
         
+        deleteButton.addEventListener('click', ()=>{
+            console.log("button index: ")
+            console.log(i);
+            theLibrary.splice(i,1);
+            //above line removes it from the library array but not from the original table...
+            tables.forEach((table)=>{
+                console.log("The index:")
+                console.log(table.dataset.indexNumber);
+                
+                if (i==table.dataset.indexNumber) {
+                    bookDiv.removeChild(table);
+
+                    //ie to reset them to be accessed correctly: 
+                    deleteButs = document.querySelectorAll(".delete-but");
+                    tables = document.querySelectorAll(".book-table")
+                    
+                }
+            });
+        });
+    });
 }
