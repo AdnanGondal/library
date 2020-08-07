@@ -6,6 +6,7 @@ let theLibrary = [];
 addBookToLibrary()
 render()
 deleteBook();
+toggleReadStatus();
 
 function Book(title,author,noPages,isRead){
 	this.title = title;
@@ -43,6 +44,7 @@ function addBookToLibrary() {
         noPages.value = "";
         readCheck.checked = false;
         deleteBook();
+        toggleReadStatus();
     });
 
 }
@@ -103,13 +105,13 @@ function createTable(book,index){
     deleteBut = document.createElement('button');
     //deleteBut.textContent = "DELETE";
     deleteBut.classList.add("fas","fa-trash-alt","btn" , "btn-block","btn-warning","delete-but");
-    
+   
     if (book.isRead) {
         readBut.textContent = "READ";
-        readBut.classList.add("btn", "btn-success","btn-block")
+        readBut.classList.add("btn", "btn-success","btn-block","read-but")
     } else {
         readBut.textContent = "NOT READ";
-        readBut.classList.add("btn", "btn-danger","btn-block")
+        readBut.classList.add("btn", "btn-danger","btn-block","read-but")
     }
     bookTableBody.appendChild(finalRow);
     finalRow.appendChild(readButContainer);
@@ -154,4 +156,27 @@ function deleteBook() {
             });
         });
     });
+}
+
+function toggleReadStatus() {
+        readButs = document.querySelectorAll(".read-but");
+
+        readButs.forEach((readBut,index)=>{
+
+            readBut.addEventListener('click',()=>{
+                console.log('button pressed');
+                readBut.classList.toggle("btn-success");
+                readBut.classList.toggle("btn-danger")
+
+                theLibrary[index].isRead = !theLibrary[index].isRead;
+                
+                if (theLibrary[index].isRead) readBut.textContent = "READ"
+                else readBut.textContent = "NOT READ"
+
+                readButs = document.querySelectorAll(".read-but");
+            });
+        });
+
+
+
 }
