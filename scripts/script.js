@@ -3,6 +3,7 @@ testBook = new Book("Harry Potter","JK Rowling",400,false);
 testBook2 = new Book("Game of Thrones","RR Martin",800,true);
 testBook3 = new Book("Diary of A Wimpy Kid","Author",125,true);
 let theLibrary = [testBook, testBook2,testBook3];
+addBookToLibrary()
 render()
 
 function Book(title,author,noPages,isRead){
@@ -22,15 +23,33 @@ Book.prototype.info = function(){
 
 function addBookToLibrary() {
     // at the moment take prompts
-    let userBook = new Book(prompt("Enter Book name: "),prompt("Enter Author"),prompt("Enter no of pages"),prompt("Enter read status"));
-    theLibrary.push(userBook);
+    let addBookBut = document.querySelector("#add-book-but");
+
+    addBookBut.addEventListener('click',()=>{
+        let title = document.querySelector("#book-title-input");
+        let author = document.querySelector("#book-author-input");
+        let noPages = document.querySelector("#book-pages-input");
+        let readCheck = document.querySelector("#book-read-input");
+        let isread;
+        if (readCheck.checked){isread = true;}
+        else isread = false;
+        let userBook = new Book(title.value,author.value,noPages.value,isread);
+        createTable(userBook);
+        theLibrary.push(userBook);
+        title.value = "";
+        author.value = "";
+        noPages.value = "";
+        readCheck.checked = false;
+    });
+
 }
 
 function createTable(book){
     bookDiv = document.querySelector("#books-div");
 
     bookTable = document.createElement('table');
-    bookTable.classList.add("table","table-bordered");
+    bookTable.classList.add("alert-light")
+    bookTable.classList.add("table");
     bookTableBody = document.createElement('tbody');
     bookDiv.appendChild(bookTable);
     bookTable.appendChild(bookTableBody);
@@ -73,16 +92,27 @@ function createTable(book){
     noPagesRow.appendChild(noPagesText);
     
     finalRow = document.createElement('tr');
+    readButContainer = document.createElement('th');
+    readButContainer.classList.add("text-center")
     readBut = document.createElement('button');
+    deleteButContainer = document.createElement('th');
+    deleteButContainer.classList.add("text-center")
+    deleteBut = document.createElement('button');
+    //deleteBut.textContent = "DELETE";
+    deleteBut.classList.add("fas","fa-trash-alt","btn" , "btn-block","btn-warning","delete-but");
+    
     if (book.isRead) {
         readBut.textContent = "READ";
-        readBut.classList.add("btn", "btn-success")
+        readBut.classList.add("btn", "btn-success","btn-block")
     } else {
         readBut.textContent = "NOT READ";
-        readBut.classList.add("btn", "btn-danger")
+        readBut.classList.add("btn", "btn-danger","btn-block")
     }
     bookTableBody.appendChild(finalRow);
-    finalRow.appendChild(readBut);
+    finalRow.appendChild(readButContainer);
+    readButContainer.appendChild(readBut);
+    finalRow.appendChild(deleteButContainer);
+    deleteButContainer.appendChild(deleteBut);
 
 }
 

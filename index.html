@@ -19,10 +19,59 @@
 <body class = "container-fluid">
 
 <h1>Library <span class = "text-danger">Under Construction </span></h1>
-<main>
-    <div id ="books-div" class = "alert-info"> 
-
+<main class>
+  <div class = "row mx-auto">
+    <div class = "col-md-3"></div>
+    <div class = "col-xs-12 col-md-6" id="add-book-container">
+    <button id = "new-book-but" class ="btn btn-block" data-toggle="modal" data-target="#exampleModalCenter">+<i class= "fas fa-book"></i></button>
     </div>
+    <div class = "col-md-3"></div>
+  </div>
+  <div class ="row mx-auto">
+    <div class = "col-md-3"></div>
+    <div id ="books-div" class = "col-md-6 alert-info"> 
+    <div class = "col-md-3"></div>
+    </div>
+  </div>
+
+<!-- POP UP: -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">New book:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class = "form-group">
+        <label for="book-title-input">Title: </label>
+        <input type = "text" class = "form-control" id ="book-title-input">
+      </div>
+      <div class = "form-group">
+        <label for="book-author-input">Author: </label>
+        <input type = "text" class = "form-control" id ="book-author-input">
+      </div>
+      <div class = "form-group">
+        <label for="book-pages-input">Number of pages </label>
+        <input type = "text" class = "form-control" id ="book-pages-input">
+      </div>
+      <div class = "form-group">
+        <label for ="book-read-input" >Have you read it?</label>
+        <input type = "checkbox" class = "form-check-input"  value="" id="book-read-input">
+        
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id = "add-book-but" data-dismiss="modal"> Add Book</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </main>
 <footer>
 

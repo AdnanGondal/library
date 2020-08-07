@@ -1,3 +1,21 @@
-
+body{
+    font-size: 15px;
+}
 
 td {width: 50%}
+
+.delete-but{
+    line-height: unset;
+}
+
+table {
+    margin: 8px 0px 8px 0px;
+}
+
+#add-book-container{
+    padding: 10px 0px 10px 0px;
+}
+
+#book-read-input{
+    margin-left: 25px ;
+}
