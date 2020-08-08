@@ -1,26 +1,33 @@
 
-testBook = new Book("Harry Potter","JK Rowling",400,false);
-testBook2 = new Book("Game of Thrones","RR Martin",800,true);
-testBook3 = new Book("Diary of A Wimpy Kid","Author",125,true);
 let theLibrary = [];
-addBookToLibrary()
-render()
-deleteBook();
-toggleReadStatus();
+render();
+addBookToLibrary();
+
+
 
 function Book(title,author,noPages,isRead){
 	this.title = title;
 	this.author = author;
 	this.noPages = noPages;
-	this.isRead = isRead;
-	
+	this.isRead = isRead;	
 }
 
-Book.prototype.info = function(){
-    let readStr = "";
-    if (this.isRead) readStr = "read";
-    else readStr = "not read";
-    return `${this.title} by ${this.author}, ${this.noPages} pages, ${readStr}` ;
+
+function render(){
+    if(!localStorage.getItem('library')) {
+        localStorage.setItem('library',JSON.stringify(theLibrary));
+    } else theLibrary = JSON.parse(localStorage.getItem('library'));
+
+    theLibrary.forEach((book,i)=>{
+        createTable(book,i);
+    });
+
+    deleteButs = document.querySelectorAll(".delete-but");
+    tables = document.querySelectorAll(".book-table");
+    deleteBook(deleteButs,tables);
+    readButs = document.querySelectorAll(".read-but");
+    toggleReadStatus(readButs);
+    
 }
 
 function addBookToLibrary() {
@@ -43,8 +50,15 @@ function addBookToLibrary() {
         author.value = "";
         noPages.value = "";
         readCheck.checked = false;
-        deleteBook();
-        toggleReadStatus();
+        deleteButs = document.querySelectorAll(".delete-but");
+        tables = document.querySelectorAll(".book-table");
+        deleteBook(deleteButs,tables);
+        readButs = Array.from(document.querySelectorAll(".read-but"));
+        readButs = readButs.slice(-1);
+        console.log({readButs});
+        toggleReadStatus(readButs);
+
+        localStorage.setItem('library',JSON.stringify(theLibrary));
     });
 
 }
@@ -121,17 +135,10 @@ function createTable(book,index){
 
 }
 
-function render(){
-   
-    theLibrary.forEach((book,i)=>{
-        createTable(book,i);
-    });
 
-}
 
-function deleteBook() {
-    deleteButs = document.querySelectorAll(".delete-but");
-    tables = document.querySelectorAll(".book-table")
+
+function deleteBook(deleteButs,tables) {
     bookDiv = document.querySelector("#books-div");
     
     deleteButs.forEach((deleteButton,i)=>{
@@ -151,19 +158,18 @@ function deleteBook() {
                     //ie to reset them to be accessed correctly: 
                     deleteButs = document.querySelectorAll(".delete-but");
                     tables = document.querySelectorAll(".book-table")
-                    
+                    localStorage.setItem('library',JSON.stringify(theLibrary));
                 }
             });
         });
     });
 }
 
-function toggleReadStatus() {
-        readButs = document.querySelectorAll(".read-but");
+function toggleReadStatus(readButs) {
 
         readButs.forEach((readBut,index)=>{
-
             readBut.addEventListener('click',()=>{
+
                 console.log('button pressed');
                 readBut.classList.toggle("btn-success");
                 readBut.classList.toggle("btn-danger")
@@ -172,8 +178,8 @@ function toggleReadStatus() {
                 
                 if (theLibrary[index].isRead) readBut.textContent = "READ"
                 else readBut.textContent = "NOT READ"
-
                 readButs = document.querySelectorAll(".read-but");
+                localStorage.setItem('library',JSON.stringify(theLibrary));
             });
         });
 

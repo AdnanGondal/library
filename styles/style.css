@@ -1,7 +1,10 @@
 body{
     font-size: 15px;
 }
-
+h1{
+    padding-top: 10px;
+    font-family: 'Lemonada', cursive !important;
+}
 td {width: 50%}
 
 .delete-but{
