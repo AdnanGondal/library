@@ -18,9 +18,7 @@ function render(){
         localStorage.setItem('library',JSON.stringify(theLibrary));
     } else theLibrary = JSON.parse(localStorage.getItem('library'));
 
-    theLibrary.forEach((book,i)=>{
-        createTable(book,i);
-    });
+   drawTable();
 
     deleteButs = document.querySelectorAll(".delete-but");
     tables = document.querySelectorAll(".book-table");
@@ -28,6 +26,12 @@ function render(){
     readButs = document.querySelectorAll(".read-but");
     toggleReadStatus(readButs);
     
+}
+
+function drawTable(){
+    theLibrary.forEach((book,i)=>{
+        createTable(book,i);
+    });
 }
 
 function addBookToLibrary() {
@@ -50,16 +54,60 @@ function addBookToLibrary() {
         author.value = "";
         noPages.value = "";
         readCheck.checked = false;
-        deleteButs = document.querySelectorAll(".delete-but");
-        tables = document.querySelectorAll(".book-table");
+        deleteButs = Array.from(document.querySelectorAll(".delete-but"));
+        tables = Array.from(document.querySelectorAll(".book-table"));
+        //deleteButs = deleteButs.slice(-1);
+        //tables = tables.slice(-1);
         deleteBook(deleteButs,tables);
-        readButs = Array.from(document.querySelectorAll(".read-but"));
-        readButs = readButs.slice(-1);
-        console.log({readButs});
-        toggleReadStatus(readButs);
 
+
+        readButs = Array.from(document.querySelectorAll(".read-but"));
+        //readButs = readButs.slice(-1);
+        //console.log({readButs});
+        toggleReadStatus(readButs);
         localStorage.setItem('library',JSON.stringify(theLibrary));
     });
+
+}
+
+function deleteBook(deleteButs,tables) {
+    bookDiv = document.querySelector("#books-div");
+    
+    deleteButs.forEach((deleteButton,i)=>{
+        
+        deleteButton.addEventListener('click', (event)=>{
+            theLibrary.splice(i,1);
+            localStorage.setItem('library',JSON.stringify(theLibrary));
+            location.reload();
+            event.stopImmediatePropagation();
+            return false;
+
+        });
+    });
+}
+
+function toggleReadStatus(readButs) {
+
+        readButs.forEach((readBut,index)=>{
+            readBut.addEventListener('click',(event)=>{
+
+                console.log('button pressed');
+                readBut.classList.toggle("btn-success");
+                readBut.classList.toggle("btn-danger")
+
+                theLibrary[index].isRead = !theLibrary[index].isRead;
+                
+                if (readBut.textContent=="NOT READ") readBut.textContent = "READ";
+                else if (readBut.textContent == "READ") readBut.textContent = "NOT READ";
+
+                readButs = document.querySelectorAll(".read-but");
+                localStorage.setItem('library',JSON.stringify(theLibrary));
+
+                event.stopImmediatePropagation();
+            });
+        });
+
+
 
 }
 
@@ -132,57 +180,5 @@ function createTable(book,index){
     readButContainer.appendChild(readBut);
     finalRow.appendChild(deleteButContainer);
     deleteButContainer.appendChild(deleteBut);
-
-}
-
-
-
-
-function deleteBook(deleteButs,tables) {
-    bookDiv = document.querySelector("#books-div");
-    
-    deleteButs.forEach((deleteButton,i)=>{
-        
-        deleteButton.addEventListener('click', ()=>{
-            console.log("button index: ")
-            console.log(i);
-            theLibrary.splice(i,1);
-            //above line removes it from the library array but not from the original table...
-            tables.forEach((table)=>{
-                console.log("The index:")
-                console.log(table.dataset.indexNumber);
-                
-                if (i==table.dataset.indexNumber) {
-                    bookDiv.removeChild(table);
-
-                    //ie to reset them to be accessed correctly: 
-                    deleteButs = document.querySelectorAll(".delete-but");
-                    tables = document.querySelectorAll(".book-table")
-                    localStorage.setItem('library',JSON.stringify(theLibrary));
-                }
-            });
-        });
-    });
-}
-
-function toggleReadStatus(readButs) {
-
-        readButs.forEach((readBut,index)=>{
-            readBut.addEventListener('click',()=>{
-
-                console.log('button pressed');
-                readBut.classList.toggle("btn-success");
-                readBut.classList.toggle("btn-danger")
-
-                theLibrary[index].isRead = !theLibrary[index].isRead;
-                
-                if (theLibrary[index].isRead) readBut.textContent = "READ"
-                else readBut.textContent = "NOT READ"
-                readButs = document.querySelectorAll(".read-but");
-                localStorage.setItem('library',JSON.stringify(theLibrary));
-            });
-        });
-
-
 
 }
