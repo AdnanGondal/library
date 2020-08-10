@@ -3,12 +3,22 @@ html,body{
     height: 100%;
 }
 
-
+main{
+    padding-bottom: 110px;
+}
 h1{
     padding-top: 10px;
     font-family: 'Lemonada', cursive !important;
 }
+h1:hover{
+    text-shadow: 1px 1px 2px grey, -1px -1px 2px grey;
+}
 td {width: 50%}
+
+button:hover{
+    transform: scale(1.01);
+    
+}   
 
 .delete-but{
     line-height: unset;
@@ -16,6 +26,7 @@ td {width: 50%}
 
 table {
     margin: 8px 0px 8px 0px;
+    padding-top: 10px;
 }
 
 #add-book-container{
@@ -28,23 +39,29 @@ table {
 
 a{
     text-decoration: none;
-    color: black;
+    color: grey;
 }
 
 a:hover{
     text-decoration: underline;
+    color: black;
 }
 
 
 
 .footer-content{
-    margin: 0.5rem 0 0.5rem 0;
+    margin: auto;
     font-size: 15px;
+    color: gray;
+}
+
+.footer-content:hover{
+    color: black;
 }
 
 @media screen and (max-width: 750px) {
     .footer-content{
-        margin: 0.25rem 0 0.25rem 0;
+        margin: auto;
         font-size: 10px;
     }
   }
@@ -56,9 +73,14 @@ footer{
     left: 0;
     width: 100%;
     font-family: 'Roboto', sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     border-top: 3px solid lightblue;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+#github-icon{
+    color: gray;
 }
