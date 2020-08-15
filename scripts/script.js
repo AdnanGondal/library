@@ -20,10 +20,10 @@ function render(){
 
    drawTable();
 
-    deleteButs = document.querySelectorAll(".delete-but");
-    tables = document.querySelectorAll(".book-table");
+    let deleteButs = document.querySelectorAll(".delete-but");
+    let tables = document.querySelectorAll(".book-table");
     deleteBook(deleteButs,tables);
-    readButs = document.querySelectorAll(".read-but");
+    let readButs = document.querySelectorAll(".read-but");
     toggleReadStatus(readButs);
     
 }
@@ -44,6 +44,7 @@ function addBookToLibrary() {
         let noPages = document.querySelector("#book-pages-input");
         let readCheck = document.querySelector("#book-read-input");
         let isread;
+
         if (readCheck.checked){isread = true;}
         else isread = false;
 
@@ -71,7 +72,7 @@ function addBookToLibrary() {
 }
 
 function deleteBook(deleteButs,tables) {
-    bookDiv = document.querySelector("#books-div");
+    let bookDiv = document.querySelector("#books-div");
     
     deleteButs.forEach((deleteButton,i)=>{
         
@@ -112,22 +113,23 @@ function toggleReadStatus(readButs) {
 }
 
 function createTable(book,index){
-    bookDiv = document.querySelector("#books-div");
+    let bookDiv = document.querySelector("#books-div");
 
-    bookTable = document.createElement('table');
+    let bookTable = document.createElement('table');
     bookTable.classList.add("table", "alert-light", "book-table");
     bookTable.setAttribute("data-index-number",`${index}`);
-    bookTableBody = document.createElement('tbody');
+
+    let bookTableBody = document.createElement('tbody');
     bookDiv.appendChild(bookTable);
     bookTable.appendChild(bookTableBody);
     
     //For the Title Row:
-    rowTitle = document.createElement('tr');
-    nameTitle = document.createElement("th");
+    let rowTitle = document.createElement('tr');
+    let nameTitle = document.createElement("th");
     nameTitle.setAttribute('scope','row')
     nameTitle.textContent = "Title: ";
     //nameTitle.classList.add("col-sm-3");
-    textTitle = document.createElement('td')
+    let textTitle = document.createElement('td')
     textTitle.classList.add("text-center");
     textTitle.textContent = book.title;
     bookTableBody.appendChild(rowTitle);
@@ -135,11 +137,11 @@ function createTable(book,index){
     rowTitle.appendChild(textTitle);
 
     //For the Author Row:
-    authorRow = document.createElement('tr');
-    authorName = document.createElement('th');
+    let authorRow = document.createElement('tr');
+    let authorName = document.createElement('th');
     authorName.setAttribute('scope','row');
     authorName.textContent = "Author: ";
-    authorText = document.createElement('td');
+    let authorText = document.createElement('td');
     authorText.classList.add("text-center");
     authorText.textContent = book.author;
     bookTableBody.appendChild(authorRow);
@@ -147,21 +149,21 @@ function createTable(book,index){
     authorRow.appendChild(authorText);
 
     //For noOfPages Row:
-    noPagesRow = document.createElement('tr');
-    noPagesName = document.createElement('th');
+    let noPagesRow = document.createElement('tr');
+    let noPagesName = document.createElement('th');
     noPagesName.setAttribute('scope','row');
     noPagesName.textContent = "Number of pages: ";
-    noPagesText = document.createElement('td');
+    let noPagesText = document.createElement('td');
     noPagesText.classList.add("text-center")
     noPagesText.textContent = book.noPages;
     bookTableBody.appendChild(noPagesRow);
     noPagesRow.appendChild(noPagesName);
     noPagesRow.appendChild(noPagesText);
     
-    finalRow = document.createElement('tr');
-    readButContainer = document.createElement('th');
+    let finalRow = document.createElement('tr');
+    let readButContainer = document.createElement('th');
     readButContainer.classList.add("text-center")
-    readBut = document.createElement('button');
+    let readBut = document.createElement('button');
     deleteButContainer = document.createElement('th');
     deleteButContainer.classList.add("text-center")
     deleteBut = document.createElement('button');
